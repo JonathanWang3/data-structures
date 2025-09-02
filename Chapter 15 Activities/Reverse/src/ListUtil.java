@@ -10,15 +10,27 @@ public class ListUtil
      *
      * @param strings the linked list to reverse
     */
-    public static LinkedList reverse(LinkedList<String> strings)
+    public static void reverse(LinkedList<String> strings)
     {
+        // copy strings into new list loop
         LinkedList<String> og = strings;
+        for (String s : strings)
+        {
+            strings.remove(s);
+        }
         LinkedList<String> fill = new LinkedList<>();
         LinkedList<String> newL = remover(fill,og);
         //System.out.println(newL);
-        strings = remover(fill,og);
+        strings.clear();
+        
+
+        for (String s : newL)
+        {
+            strings.add(s);
+        }
+
         System.out.println(strings);
-        return newL;
+        //return newL;
 
     }
 
