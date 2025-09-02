@@ -15,7 +15,9 @@ public class ListUtil
         LinkedList<String> og = strings;
         LinkedList<String> fill = new LinkedList<>();
         LinkedList<String> newL = remover(fill,og);
-        System.out.println(newL);
+        //System.out.println(newL);
+        strings = remover(fill,og);
+        System.out.println(strings);
         return newL;
 
     }
