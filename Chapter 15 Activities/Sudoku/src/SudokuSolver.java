@@ -13,6 +13,9 @@ public class SudokuSolver {
 
     public SudokuSolver(String fileName) {
         // read the puzzle file
+        rows = new ArrayList<>();
+        cols = new ArrayList<>();
+        squares = new ArrayList<>();
         try (Scanner in = new Scanner(new File(fileName))) {
 
             this.grid = new int[N][N];
@@ -37,13 +40,12 @@ public class SudokuSolver {
 
         // create the list of sets for each row (this.rows)
         // ...
-        
         for (int[] row : this.grid) {
             Set<Integer> newRow = new HashSet<>();
             for (int num : row) {
                 newRow.add(num);
             }
-            rows.add(newRow);
+            this.rows.add(newRow);
         }
 
         // create the list of sets for each col (this.cols)
@@ -53,7 +55,7 @@ public class SudokuSolver {
             for (int j = 0; j < N; j++) {
                 newCol.add(this.grid[j][i]);
             }
-            cols.add(newCol);
+            this.cols.add(newCol);
         }
 
 
@@ -64,17 +66,27 @@ public class SudokuSolver {
             6 7 8
          */
         // ...
-
-        for (int i = 0; i < N; i+=3) {
-            for (int j = 0; j<N; j+=3) {
-                Set<Integer> newSqr = new HashSet<>();
-                for (int k = i; k<3+i; k++) {
-                    for (int l=0; l<3+j;l++){
-
-                    }
-                }
-            }
+        for (int i = 0; i<N; i++) {
+            squares.add(new HashSet<Integer>());
         }
+        // squares.get(index).add(grid[x][y]);
+        
+        int counter = 0;
+        int x;
+        int y;
+        for (int i = 0; i<(N*N); i++) {
+            x = Math.floorDiv((i%9), 3);
+            y = Math.floorDiv((i-(i%9)),27);
+            squares.get(3*y + x).add(this.grid[Math.floorDiv(i, 9)][i%9]);
+        }
+
+        
+        /*
+        for (int i = 0; i < N; i++) {
+            Set<Integer> newSqr = new HashSet<>();
+            
+            for 
+        }*/
 
         // create a hash set for [1..9] (this.nums)
         // ...
@@ -168,7 +180,7 @@ public class SudokuSolver {
     }
 
     public static void main(String[] args) {
-        String fileName = "src/puzzle1.txt";
+        String fileName = "puzzle1.txt";
 
         SudokuSolver solver = new SudokuSolver(fileName);
         System.out.println(solver);
