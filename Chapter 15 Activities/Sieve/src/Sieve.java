@@ -13,7 +13,16 @@ public class Sieve
         int n = in.nextInt();
 
         // Your work goes here
-        . . .
+        Set<Integer> nums = new HashSet<>();
+        boolean prime = false;
+        for (int i = 2; i < n; i++){
+            
+            for (int j = 2; j < n; j++) {
+                if !(i % j == 0 && Math.floorDiv(i,j) != 0){
+                    nums.add(i)
+                }
+            }
+        }
 
 
 
