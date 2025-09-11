@@ -16,6 +16,8 @@ public class SudokuSolver {
         rows = new ArrayList<>();
         cols = new ArrayList<>();
         squares = new ArrayList<>();
+        nums = new HashSet<Integer>();
+        
         try (Scanner in = new Scanner(new File(fileName))) {
 
             this.grid = new int[N][N];
@@ -89,7 +91,9 @@ public class SudokuSolver {
         }*/
 
         // create a hash set for [1..9] (this.nums)
-        // ...
+        for (int i = 1; i<=9; i++) {
+            this.nums.add(i);
+        }
 
         // visually inspect that all the sets are correct
         for (int row = 0; row < N; row++) {
@@ -135,6 +139,34 @@ public class SudokuSolver {
          */
         Set<Integer> possibleNums = new HashSet<Integer>();
         possibleNums.addAll(this.nums);
+        possibleNums.removeAll(this.cols.get(nextCol));
+        possibleNums.removeAll(this.rows.get(nextRow));
+        if (nextRow <3){
+            if (nextCol <3) 
+                possibleNums.removeAll(this.squares.get(0));
+            else if (nextCol < 6)
+                possibleNums.removeAll(this.squares.get(1));
+            else if (nextCol < 9)
+                possibleNums.removeAll(this.squares.get(2));
+        }
+        else if (nextRow <6){
+            if (nextCol <3) 
+                possibleNums.removeAll(this.squares.get(3));
+            else if (nextCol < 6)
+                possibleNums.removeAll(this.squares.get(4));
+            else if (nextCol < 9)
+                possibleNums.removeAll(this.squares.get(5));
+        }
+        else if (nextRow <9){
+            if (nextCol <3) 
+                possibleNums.removeAll(this.squares.get(6));
+            else if (nextCol < 6)
+                possibleNums.removeAll(this.squares.get(7));
+            else if (nextCol < 9)
+                possibleNums.removeAll(this.squares.get(8));
+        }
+        
+
         
         // ...
 
@@ -146,7 +178,34 @@ public class SudokuSolver {
         // try each possible number
         for (Integer possibleNum : possibleNums) {
             // update the grid and all three corresponding sets with possibleNum
-            // ...
+            this.grid[nextRow][nextCol] = possibleNum;
+            this.cols.get(nextCol).add(possibleNum);
+            this.rows.get(nextRow).add(possibleNum);
+            if (nextRow <3){
+                if (nextCol <3) 
+                    this.squares.get(0).add(possibleNum);
+                else if (nextCol < 6)
+                    this.squares.get(1).add(possibleNum);
+                else if (nextCol < 9)
+                    this.squares.get(2).add(possibleNum);
+            }
+            else if (nextRow <6){
+                if (nextCol <3) 
+                    this.squares.get(3).add(possibleNum);
+                else if (nextCol < 6)
+                    this.squares.get(4).add(possibleNum);
+                else if (nextCol < 9)
+                    this.squares.get(5).add(possibleNum);
+            }
+            else if (nextRow <9){
+                if (nextCol <3) 
+                    this.squares.get(6).add(possibleNum);
+                else if (nextCol < 6)
+                    this.squares.get(7).add(possibleNum);
+                else if (nextCol < 9)
+                    this.squares.get(8).add(possibleNum);
+            }
+
 
             // recursively solve the board
             if (this.solve()) {
@@ -158,7 +217,32 @@ public class SudokuSolver {
                  element in the grid back to 0 and removing possibleNum from all three corresponding
                  sets.
                  */
-                // ...
+                possibleNums.removeAll(this.cols.get(nextCol));
+                possibleNums.removeAll(this.rows.get(nextRow));
+                if (nextRow <3){
+                    if (nextCol <3) 
+                        possibleNums.removeAll(this.squares.get(0));
+                    else if (nextCol < 6)
+                        possibleNums.removeAll(this.squares.get(1));
+                    else if (nextCol < 9)
+                        possibleNums.removeAll(this.squares.get(2));
+                }
+                else if (nextRow <6){
+                    if (nextCol <3) 
+                        possibleNums.removeAll(this.squares.get(3));
+                    else if (nextCol < 6)
+                        possibleNums.removeAll(this.squares.get(4));
+                    else if (nextCol < 9)
+                        possibleNums.removeAll(this.squares.get(5));
+                }
+                else if (nextRow <9){
+                    if (nextCol <3) 
+                        possibleNums.removeAll(this.squares.get(6));
+                    else if (nextCol < 6)
+                        possibleNums.removeAll(this.squares.get(7));
+                    else if (nextCol < 9)
+                        possibleNums.removeAll(this.squares.get(8));
+        }
             }
         }
 
