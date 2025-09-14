@@ -110,6 +110,7 @@ public class SudokuSolver {
 
     public boolean solve() {
         // find an empty location, if any
+        
         boolean finished = true;
         int nextRow = -1;
         int nextCol = -1;
@@ -119,9 +120,12 @@ public class SudokuSolver {
                     finished = false;
                     nextRow = row;
                     nextCol = col;
+
+
                 }
             }
         }
+        int squareIndex = (nextRow / 3) * 3 + (nextCol / 3);
 
         // the board is complete; we solved it
         if (finished) {
@@ -141,7 +145,11 @@ public class SudokuSolver {
         possibleNums.addAll(this.nums);
         possibleNums.removeAll(this.cols.get(nextCol));
         possibleNums.removeAll(this.rows.get(nextRow));
-        if (nextRow <3){
+        possibleNums.removeAll(this.squares.get(squareIndex));
+        
+
+
+        /* if (nextRow <3){
             if (nextCol <3) 
                 possibleNums.removeAll(this.squares.get(0));
             else if (nextCol < 6)
@@ -164,7 +172,7 @@ public class SudokuSolver {
                 possibleNums.removeAll(this.squares.get(7));
             else if (nextCol < 9)
                 possibleNums.removeAll(this.squares.get(8));
-        }
+        } */
         
 
         
@@ -175,6 +183,7 @@ public class SudokuSolver {
             return false;
         }
 
+        /*
         // try each possible number
         for (Integer possibleNum : possibleNums) {
             // update the grid and all three corresponding sets with possibleNum
@@ -216,7 +225,7 @@ public class SudokuSolver {
                  Undo the move before trying another possible number by setting the corresponding
                  element in the grid back to 0 and removing possibleNum from all three corresponding
                  sets.
-                 */
+                 
                 possibleNums.removeAll(this.cols.get(nextCol));
                 possibleNums.removeAll(this.rows.get(nextRow));
                 if (nextRow <3){
@@ -244,9 +253,26 @@ public class SudokuSolver {
                         possibleNums.removeAll(this.squares.get(8));
         }
             }
-        }
+        }*/
 
         return false;
+    }
+
+    public boolean safe(ArrayList<Set<Integer>> rowlist, ArrayList<Set<Integer>> colList, ArrayList<Set<Integer>> squareList, int rowIn, int colIn, int possibleNum) {
+        //figure out which row, col, and square to check based on rowIn and colIn
+        int nextRow = rowIn;
+        int nextCol = colIn;
+        if (rows.get(nextRow).contains(possibleNum)) {
+            return false;
+        }
+        if (cols.get(nextCol).contains(possibleNum)) {
+            return false;
+        }
+        int squareIndex = (nextRow / 3) * 3 + (nextCol / 3);
+        if (squares.get(squareIndex).contains(possibleNum)) {
+            return false;
+        }
+        return true;
     }
 
     public String toString() {
