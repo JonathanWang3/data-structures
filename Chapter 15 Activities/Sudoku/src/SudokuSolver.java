@@ -147,34 +147,6 @@ public class SudokuSolver {
         possibleNums.removeAll(this.rows.get(nextRow));
         possibleNums.removeAll(this.squares.get(squareIndex));
         
-
-
-        /* if (nextRow <3){
-            if (nextCol <3) 
-                possibleNums.removeAll(this.squares.get(0));
-            else if (nextCol < 6)
-                possibleNums.removeAll(this.squares.get(1));
-            else if (nextCol < 9)
-                possibleNums.removeAll(this.squares.get(2));
-        }
-        else if (nextRow <6){
-            if (nextCol <3) 
-                possibleNums.removeAll(this.squares.get(3));
-            else if (nextCol < 6)
-                possibleNums.removeAll(this.squares.get(4));
-            else if (nextCol < 9)
-                possibleNums.removeAll(this.squares.get(5));
-        }
-        else if (nextRow <9){
-            if (nextCol <3) 
-                possibleNums.removeAll(this.squares.get(6));
-            else if (nextCol < 6)
-                possibleNums.removeAll(this.squares.get(7));
-            else if (nextCol < 9)
-                possibleNums.removeAll(this.squares.get(8));
-        } */
-        
-
         
         // ...
 
@@ -183,37 +155,15 @@ public class SudokuSolver {
             return false;
         }
 
-        /*
+        
         // try each possible number
         for (Integer possibleNum : possibleNums) {
             // update the grid and all three corresponding sets with possibleNum
             this.grid[nextRow][nextCol] = possibleNum;
             this.cols.get(nextCol).add(possibleNum);
             this.rows.get(nextRow).add(possibleNum);
-            if (nextRow <3){
-                if (nextCol <3) 
-                    this.squares.get(0).add(possibleNum);
-                else if (nextCol < 6)
-                    this.squares.get(1).add(possibleNum);
-                else if (nextCol < 9)
-                    this.squares.get(2).add(possibleNum);
-            }
-            else if (nextRow <6){
-                if (nextCol <3) 
-                    this.squares.get(3).add(possibleNum);
-                else if (nextCol < 6)
-                    this.squares.get(4).add(possibleNum);
-                else if (nextCol < 9)
-                    this.squares.get(5).add(possibleNum);
-            }
-            else if (nextRow <9){
-                if (nextCol <3) 
-                    this.squares.get(6).add(possibleNum);
-                else if (nextCol < 6)
-                    this.squares.get(7).add(possibleNum);
-                else if (nextCol < 9)
-                    this.squares.get(8).add(possibleNum);
-            }
+            this.squares.get(squareIndex).add(possibleNum);
+
 
 
             // recursively solve the board
@@ -225,54 +175,14 @@ public class SudokuSolver {
                  Undo the move before trying another possible number by setting the corresponding
                  element in the grid back to 0 and removing possibleNum from all three corresponding
                  sets.
-                 
-                possibleNums.removeAll(this.cols.get(nextCol));
-                possibleNums.removeAll(this.rows.get(nextRow));
-                if (nextRow <3){
-                    if (nextCol <3) 
-                        possibleNums.removeAll(this.squares.get(0));
-                    else if (nextCol < 6)
-                        possibleNums.removeAll(this.squares.get(1));
-                    else if (nextCol < 9)
-                        possibleNums.removeAll(this.squares.get(2));
-                }
-                else if (nextRow <6){
-                    if (nextCol <3) 
-                        possibleNums.removeAll(this.squares.get(3));
-                    else if (nextCol < 6)
-                        possibleNums.removeAll(this.squares.get(4));
-                    else if (nextCol < 9)
-                        possibleNums.removeAll(this.squares.get(5));
-                }
-                else if (nextRow <9){
-                    if (nextCol <3) 
-                        possibleNums.removeAll(this.squares.get(6));
-                    else if (nextCol < 6)
-                        possibleNums.removeAll(this.squares.get(7));
-                    else if (nextCol < 9)
-                        possibleNums.removeAll(this.squares.get(8));
-        }
+                */
+                this.grid[nextRow][nextCol] = 0;
+                this.cols.get(nextCol).remove(possibleNum);
+                this.rows.get(nextRow).remove(possibleNum);
+                this.squares.get(squareIndex).remove(possibleNum);
             }
-        }*/
-
+        }
         return false;
-    }
-
-    public boolean safe(ArrayList<Set<Integer>> rowlist, ArrayList<Set<Integer>> colList, ArrayList<Set<Integer>> squareList, int rowIn, int colIn, int possibleNum) {
-        //figure out which row, col, and square to check based on rowIn and colIn
-        int nextRow = rowIn;
-        int nextCol = colIn;
-        if (rows.get(nextRow).contains(possibleNum)) {
-            return false;
-        }
-        if (cols.get(nextCol).contains(possibleNum)) {
-            return false;
-        }
-        int squareIndex = (nextRow / 3) * 3 + (nextCol / 3);
-        if (squares.get(squareIndex).contains(possibleNum)) {
-            return false;
-        }
-        return true;
     }
 
     public String toString() {
@@ -290,7 +200,7 @@ public class SudokuSolver {
     }
 
     public static void main(String[] args) {
-        String fileName = "puzzle1.txt";
+        String fileName = "src/puzzle1.txt";
 
         SudokuSolver solver = new SudokuSolver(fileName);
         System.out.println(solver);

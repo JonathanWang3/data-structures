@@ -12,13 +12,13 @@ public class StringLengthMap
 {
     public static void main(String[] args) throws FileNotFoundException
     {
-        String filename = "src\\test1.txt";
+        String filename = "src/test1.txt";
 
         try (Scanner in = new Scanner(new File(filename)))
         {
 
             // Create your map here
-            HashMap<Integer, String> wordMap = new HashMap<>();
+            Map<Integer, String> wordMap = new TreeMap<>();
 
             while (in.hasNext())
             {
@@ -27,8 +27,14 @@ public class StringLengthMap
 
                 // Update the map here
                 // Modify Worked Example 15.1
-                wordMap.merge(len,wordMap.get(len), (a, b) -> a + ", " + b);
-
+                if (wordMap.containsKey(len)) {
+                    String currentString = wordMap.get(len);
+                    currentString += ", " + word;
+                    wordMap.put(len, currentString);
+                }
+                else {
+                    wordMap.put(len, word);
+                }
 
             }
             System.out.println(wordMap);

@@ -1,5 +1,5 @@
-import java.util.*;
 import java.io.*;
+import java.util.*;
 /**
  * Read all words from a file and add them to a
  * map whose keys are word lengths and whose values
@@ -18,7 +18,7 @@ public class StringLengthMap2
         {
 
             // Create your map here
-            
+            Map<Integer, String> wordMap = new TreeMap<>();           
 
             while (in.hasNext())
             {
@@ -28,9 +28,10 @@ public class StringLengthMap2
                 // Update the map here
                 // Use the Java 8 merge() method
                 
-
+                wordMap.merge(len, word, (oldValue, newValue) -> oldValue + ", " + newValue);
 
             }
+            System.out.println(wordMap);
 
             // Print the strings, in increasing order of their length
             // Use this format: 1: i, a, i
