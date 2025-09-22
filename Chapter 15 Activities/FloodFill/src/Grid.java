@@ -1,15 +1,56 @@
+
+import java.util.Stack;
+
+class Pair {
+    int row;
+    int col;
+
+    Pair(int r, int c) {
+        this.row = r;
+        this.col = c;
+    }
+
+    int getRow() {
+        return this.row; 
+    }
+
+    int getCol() {
+        return this.col;
+    }
+
+}
+
 public class Grid
 {
     private static final int SIZE = 10;
     int[][] pixels = new int[SIZE][SIZE];
-    . . .
+    Stack<Pair> tsStack = new Stack<>();
+
 
     /**
      * Flood fill, starting with the given row and column.
     */
     public void floodfill(int row, int column)
     {
-        . . .
+        boolean availableSpace = true;
+
+        tsStack.push(new Pair(row,column));
+
+        // Check nesw in order
+
+        for (int r = row; r < SIZE; r+=2){
+            for (int c = column; c < SIZE; c++) {
+                if (r - 1 >= 0 && pixels[r-1][c] == 0) 
+                    tsStack.push(new Pair(r - 1, c));
+                if (c + 1 <= SIZE && pixels[r][c+1] == 0) 
+                    tsStack.push(new Pair(r, c+1));
+                if (r + 1 <= SIZE && pixels[r+1][c] == 0) 
+                    tsStack.push(new Pair(r+1, c));
+                if (c - 1 >= 0 && pixels[r+1][c] == 0) 
+                    tsStack.push(new Pair(r, c-1));
+            }
+        }
+        
     }
 
     @Override
