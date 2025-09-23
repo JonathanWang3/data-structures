@@ -32,23 +32,29 @@ public class Grid
     */
     public void floodfill(int row, int column)
     {
-        boolean availableSpace = true;
+        int count = 0;
 
         tsStack.push(new Pair(row,column));
 
         // Check nesw in order
 
-        for (int r = row; r < SIZE; r+=2){
-            for (int c = column; c < SIZE; c++) {
-                if (r - 1 >= 0 && pixels[r-1][c] == 0) 
-                    tsStack.push(new Pair(r - 1, c));
-                if (c + 1 <= SIZE && pixels[r][c+1] == 0) 
-                    tsStack.push(new Pair(r, c+1));
-                if (r + 1 <= SIZE && pixels[r+1][c] == 0) 
-                    tsStack.push(new Pair(r+1, c));
-                if (c - 1 >= 0 && pixels[r+1][c] == 0) 
-                    tsStack.push(new Pair(r, c-1));
-            }
+        while (!tsStack.isEmpty()) {
+            Pair p = tsStack.pop();
+            int r = p.getRow();
+            int c = p.getCol();
+
+            count++;
+            if (pixels[r][c] == 0)
+                pixels[r][c] = count;
+            if (r - 1 >= 0 && pixels[r-1][c] == 0) 
+                tsStack.push(new Pair(r - 1, c));
+            if (c + 1 < SIZE && pixels[r][c+1] == 0) 
+                tsStack.push(new Pair(r, c+1));
+            if (r + 1 < SIZE && pixels[r+1][c] == 0) 
+                tsStack.push(new Pair(r+1, c));
+            if (c - 1 >= 0 && pixels[r][c-1] == 0) 
+                tsStack.push(new Pair(r, c-1));    
+            
         }
         
     }
