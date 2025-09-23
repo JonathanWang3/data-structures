@@ -17,12 +17,31 @@ public class HTMLChecker
 {
     public static void main(String[] args)
     {
-        String filename = "src/TagSample1.html";
+        String filename = "TagSample1.html";
 
         try (Scanner in = new Scanner(new File(filename)))
         {
             // Your code goes here
-            . . .
+            Stack<String> stack = new Stack<>();
+            boolean isBalanced = true;
+            while (in.hasNext() && isBalanced) {
+                String tag = in.next();
+                if (tag.contains("<") && !tag.contains("</")) {
+                    stack.push(tag);
+                } else if (tag.contains("</")) {
+                    if (stack.isEmpty()) {
+                        isBalanced = false;
+                    } else {
+                        String openTag = stack.pop();
+                        String expectedCloseTag = "</" + openTag.substring(1);
+                        if (!tag.equals(expectedCloseTag)) {
+                            isBalanced = false; 
+                        }
+                    }
+                }
+                
+            }
+            System.out.println("The tags are balanced: " + isBalanced);
 
 
         } catch (FileNotFoundException e)
@@ -31,4 +50,5 @@ public class HTMLChecker
         }
 
     }
+
 }
