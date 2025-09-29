@@ -5,6 +5,8 @@ import java.util.NoSuchElementException;
     LinkedList class that computes the number of elements
     in the list by following links and counting the
     elements until the end of the list is reached.
+
+    size and contains to use recursion.
 */
 public class LinkedList
 {
@@ -24,7 +26,24 @@ public class LinkedList
     */
     public int size()
     {
-        . . .
+        int count = 0; 
+        Node current = first;
+        while (current != null)
+        {
+            count++;
+            current = current.next;
+        }
+        return count;
+    }
+
+    public int sizeRecursive(Node n) {
+        // n starts at first for base case
+        if (n == null) {
+            return 0;
+        }
+        else {
+            return 1 + sizeRecursive (n.next);
+        }
     }
 
     /**
@@ -61,6 +80,36 @@ public class LinkedList
         newNode.data = element;
         newNode.next = first;
         first = newNode;
+    }
+
+    public boolean contains(Object element) {
+        while (first != null) {
+            if (first.data.equals(element)) {
+                return true;
+            } 
+            else {
+                first = first.next;
+            }
+            
+        }
+        return false;
+    }
+
+    /**
+     * Returns true if the linked list contains the specified element.
+     * @param element the element to search for
+     * @return true if the element is found, false otherwise
+     */
+    public boolean containsRecursive(Node start, Object element) {
+        if (start == null) {
+            return false;
+        }
+        else if (start.data.equals(element)) {
+            return true;
+        }
+        else {
+            return containsRecursive(start.next, element);
+        }
     }
 
     /**
