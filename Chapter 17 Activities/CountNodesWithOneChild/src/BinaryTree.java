@@ -102,4 +102,23 @@ public class BinaryTree
         result.root = root.right;
         return result;
     }
+
+    /**
+        Counts the number of nodes in this tree that have exactly one child.
+        @return the number of nodes with one child
+    */
+    public int countNodesWithOneChild()
+    {
+        if (root.left == null && root.right != null) {
+            return 1 + right().countNodesWithOneChild();
+
+        } else if (root.left != null && root.right == null) {
+            return 1 + left().countNodesWithOneChild();
+
+        } else if (root.left == null && root.right == null) {
+            return 0;
+        } else {
+            return left().countNodesWithOneChild() + right().countNodesWithOneChild();
+        }
+    }
 }
