@@ -21,7 +21,16 @@ public class BinarySearchTree
     */
     public void add(Comparable obj) 
     {   
-        
+        Node newNode = new Node();
+        newNode.data = obj;
+        newNode.left = null;
+        newNode.right = null;
+
+        if (this.root == null) {
+            this.root = newNode;
+            return;
+        }
+        this.root.addNode(newNode);
     }
 
     /**
@@ -31,6 +40,17 @@ public class BinarySearchTree
     */
     public boolean find(Comparable obj)
     {
+        Node current = this.root;
+        while (current != null) {
+            int diff = obj.compareTo(current.data);
+            if (diff == 0) {
+                return true;
+            } else if (diff < 0) {
+                current = current.left;
+            } else {
+                current = current.right;
+            }
+        }
         return false;
     }
     
@@ -41,7 +61,24 @@ public class BinarySearchTree
     */
     public void remove(Comparable obj)
     {
-        
+        Node toBeRemove = this.root;
+        boolean found = false;
+        Node parent = null;
+
+        while (!found && toBeRemove != null) {
+            int diff = obj.compareTo(toBeRemove.data);
+            if (diff == 0) {
+                found = true;
+            } else if (diff < 0) {
+                toBeRemove = toBeRemove.left;
+            } else {
+                toBeRemove = toBeRemove.right;
+            }
+        }
+
+        if (!found) {
+            return;
+        }
     }
     
     /**
@@ -67,7 +104,10 @@ public class BinarySearchTree
     */
     static class Node
     {   
-        
+        // A BST MUST BE made of Comparable Objects
+        public Comparable data;
+        public Node left;
+        public Node right;
 
         /**
             Inserts a new node as a descendant of this node.
@@ -75,7 +115,23 @@ public class BinarySearchTree
         */
         public void addNode(Node newNode)
         {   
-            
+            // If diff < 0, newNode is to the left of this node
+            // If diff > 0, newNode is to the fight of this node
+            int diff = newNode.data.compareTo(this.data);
+
+            if (diff < 0) {
+                if (this.left == null) {
+                    this.left = newNode;
+                } else {
+                    this.left.addNode(newNode);
+                }
+            } else if (diff > 0){
+                if (this.right == null) {
+                    this.right = newNode;
+                } else {
+                    this.right.addNode(newNode);
+                }
+            }
         }
     }
 }
